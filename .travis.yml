@@ -1,0 +1,12 @@
+#need su permissions
+sudo: required
+#required services
+services:
+    - docker
+#build an image
+before_install:
+    - docker build -t arunarjun/docker-react -f Dockerfile.dev .
+#run a series cmd for tests
+#travis will see the o/p of each below commads
+script:
+    - docker run -e CI=true arunarjun/docker-react npm run test
