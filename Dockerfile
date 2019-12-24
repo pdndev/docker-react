@@ -10,4 +10,6 @@ RUN npm run build
 #run phase here we no need to tag the phase if we put
 #FROM after one phase means it indicates the above phase has completed
 FROM nginx
+#EB will use this to map to incoming request to app
+EXPOSE 80
 COPY --from=builder /usr/app/react_client/build /usr/share/nginx/html
