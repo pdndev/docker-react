@@ -10,3 +10,25 @@ before_install:
 #travis will see the o/p of each below commads
 script:
     - docker run -e CI=true arunarjun/docker-react npm run test
+
+deploy:
+    #telling travis ci to use aws services
+    provider: elasticbeanstalk
+    #specify where we started the eb instance(dockerreact-env.btfgsef2ur.ap-south-1.elasticbeanstalk.com/)
+    region: "ap-south-1"
+    #name of app in eb instance
+    app: "docker-react"
+    #take the env name in eb
+    env: "DockerReact-env"
+    #travis will zip all our files and put in s3 bucket and use to redeploy the app
+    #take this name under s3
+    bucket_name: "elasticbeanstalk-ap-south-1-503887499179"
+    #this name will have same name as app name
+    bucket_path: "docker-react"
+    #anytime we push code to master then do deploy
+    on:
+      branch: master
+    #get access key from local env var in travis app
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: "$AWS_SECRET_KEY"
